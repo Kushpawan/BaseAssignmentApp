@@ -1,4 +1,4 @@
-package com.example.baseassignmentapp.viewModel
+package com.example.baseassignmentapp.home.viewModel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +14,7 @@ class HomeViewModel(
     application: Application
 ) : BaseViewModel(application) {
 
+    // mutable live data of result type to create Observable type
     var searchLiveData = MutableLiveData<Resource<SearchResponse>>()
 
     fun searchForCocktail(searchQuery: String) {
@@ -21,12 +22,16 @@ class HomeViewModel(
     }
 
     private fun searchCall(searchQuery: String) {
+        // called API using coroutine scope
         scope.launch {
             searchLiveData.postValue(Resource.loading())
             when (val result = homeRepo.getResultAsyncCall(searchQuery)) {
-                is Result.GenericError -> searchLiveData.postValue(Resource.error(result.error))
-                is Result.Success -> searchLiveData.postValue(Resource.success(result.value))
+                is Result.GenericError ->
+                    searchLiveData.postValue(Resource.error(result.error))
+                is Result.Success ->
+                    searchLiveData.postValue(Resource.success(result.value))
             }
         }
     }
+
 }

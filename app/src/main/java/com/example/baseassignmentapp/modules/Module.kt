@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.baseassignmentapp.home.HomeRepo
 import com.example.baseassignmentapp.home.HomeRepoImp
 import com.example.baseassignmentapp.retrofit.SearchApi
-import com.example.baseassignmentapp.viewModel.HomeViewModel
+import com.example.baseassignmentapp.home.viewModel.HomeViewModel
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

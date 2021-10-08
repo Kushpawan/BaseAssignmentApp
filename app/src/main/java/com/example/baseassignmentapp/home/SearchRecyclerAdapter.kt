@@ -8,13 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.example.baseassignmentapp.R
 import com.example.baseassignmentapp.models.Drinks
 import java.util.*
 
 class SearchRecyclerAdapter(
     var context: Context,
-    var drinkList: MutableList<Drinks?>
+    var drinkList: MutableList<Drinks?>,
+    private val listener: (Drinks?) -> Unit
 ) : RecyclerView.Adapter<SearchRecyclerAdapter.SearchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -25,7 +27,12 @@ class SearchRecyclerAdapter(
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         holder.searchAddress.text = drinkList[position]?.strDrink
-        holder.image.load(drinkList[position]?.strDrinkThumb)
+        holder.image.load(drinkList[position]?.strDrinkThumb) {
+            transformations(RoundedCornersTransformation(25f))
+        }
+        holder.itemView.setOnClickListener {
+            listener.invoke(drinkList[position])
+        }
     }
 
     override fun getItemCount(): Int {
